@@ -1,0 +1,15 @@
+{
+  "uniqueId": "net.arjunsatarkar.rot13share",
+  "developers": [
+    {
+      "name": "Arjun Satarkar",
+      "organisationUrl": "https://arjunsatarkar.net/"
+    }
+  ],
+  "artifactVersion": "",
+  "description": "",
+  "name": "ROT13 Share",
+  "licenses": [
+    "Rot13ShareLicense"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "uniqueId": "com.adobe.fonts.SourceCodePro",
+  "developers": [
+    {
+      "name": "Adobe",
+      "organisationUrl": "https://fonts.adobe.com/"
+    }
+  ],
+  "artifactVersion": "",
+  "description": "",
+  "name": "Source Code Pro",
+  "licenses": [
+    "SourceCodeProLicense"
+  ]
+}

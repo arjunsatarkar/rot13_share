@@ -1,0 +1,15 @@
+{
+  "uniqueId": "com.getbootstrap.icons",
+  "developers": [
+    {
+      "name": "The Bootstrap Authors",
+      "organisationUrl": "https://getbootstrap.com/"
+    }
+  ],
+  "artifactVersion": "",
+  "description": "",
+  "name": "Bootstrap Icons",
+  "licenses": [
+    "BootstrapIconsLicense"
+  ]
+}
