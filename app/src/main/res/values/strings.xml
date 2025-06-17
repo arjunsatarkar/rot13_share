@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ROT13 Share</string>
+    <string name="app_source_url">https://github.com/arjunsatarkar/rot13_share</string>
+    <string name="author_site">https://arjunsatarkar.net/</string>
 </resources>

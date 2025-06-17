@@ -10,8 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:targetApi="35"
-        android:theme="@style/Theme.Rot13Share">
+        android:theme="@style/Theme.Rot13Share"
+        tools:targetApi="35">
         <activity
             android:name=".ShareActivity"
             android:exported="true"
