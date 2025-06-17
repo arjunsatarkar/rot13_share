@@ -67,14 +67,16 @@ val LINK_STYLE = SpanStyle(
     textDecoration = TextDecoration.Underline
 )
 
-@Serializable
-object MainScreenRoute
+sealed class Route {
+    @Serializable
+    data object MainScreen : Route()
 
-@Serializable
-object AboutScreenRoute
+    @Serializable
+    data object AboutScreen : Route()
 
-@Serializable
-object LicensesScreenRoute
+    @Serializable
+    data object LicensesScreen : Route()
+}
 
 class LauncherActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +97,7 @@ fun OuterApp() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val onNavigateTo: (route: Any) -> Unit = { route ->
+    val onNavigateTo: (route: Route) -> Unit = { route ->
         navController.navigate(route, navOptions = navOptions {
             popUpTo(route) {
                 inclusive = true
@@ -105,22 +107,22 @@ fun OuterApp() {
 
     Scaffold(topBar = {
         MenuBar(
-            main = currentDestination?.hasRoute(MainScreenRoute::class) == true,
+            main = currentDestination?.hasRoute(Route.MainScreen::class) == true,
             onNavigateTo = onNavigateTo,
             onBack = navController::popBackStack
         )
     }) { innerPadding ->
-        NavHost(navController = navController, startDestination = MainScreenRoute) {
-            composable<MainScreenRoute> { MainScreen(innerPadding) }
-            composable<AboutScreenRoute> { AboutScreen(innerPadding, onNavigateTo = onNavigateTo) }
-            composable<LicensesScreenRoute> { LicensesScreen(innerPadding) }
+        NavHost(navController = navController, startDestination = Route.MainScreen) {
+            composable<Route.MainScreen> { MainScreen(innerPadding) }
+            composable<Route.AboutScreen> { AboutScreen(innerPadding, onNavigateTo = onNavigateTo) }
+            composable<Route.LicensesScreen> { LicensesScreen(innerPadding) }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuBar(main: Boolean, onNavigateTo: (route: Any) -> Unit, onBack: () -> Unit) {
+fun MenuBar(main: Boolean, onNavigateTo: (route: Route) -> Unit, onBack: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val navigationIcon: @Composable (() -> Unit) = if (main) {
@@ -146,7 +148,7 @@ fun MenuBar(main: Boolean, onNavigateTo: (route: Any) -> Unit, onBack: () -> Uni
                 DropdownMenu(
                     expanded = expanded, onDismissRequest = { expanded = false }) {
                     DropdownMenuItem(text = { Text("About") }, onClick = {
-                        onNavigateTo(AboutScreenRoute)
+                        onNavigateTo(Route.AboutScreen)
                         expanded = false
                     })
                 }
@@ -218,10 +220,10 @@ fun MainScreen(innerPadding: PaddingValues) {
 
 
 @Composable
-fun AboutScreen(innerPadding: PaddingValues, onNavigateTo: (Any) -> Unit) {
+fun AboutScreen(innerPadding: PaddingValues, onNavigateTo: (route: Route) -> Unit) {
     val uriHandler = LocalUriHandler.current
-
     val appSourceUrl = stringResource(R.string.app_source_url)
+
     Column(
         modifier = Modifier
             .padding(innerPadding)
@@ -254,7 +256,7 @@ fun AboutScreen(innerPadding: PaddingValues, onNavigateTo: (Any) -> Unit) {
                 Text("Source Code")
             }
             TextButton(
-                onClick = { onNavigateTo(LicensesScreenRoute) }, modifier = Modifier.fillMaxWidth()
+                onClick = { onNavigateTo(Route.LicensesScreen) }, modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Licenses")
             }
